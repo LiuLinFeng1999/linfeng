@@ -48,4 +48,5 @@ public class County extends DataSupport
 	public int getId()
 	{
 		return id;
-	}}
+	}
+}
