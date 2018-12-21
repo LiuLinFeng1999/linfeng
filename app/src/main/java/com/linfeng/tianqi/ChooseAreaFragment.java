@@ -10,6 +10,7 @@ import com.linfeng.tianqi.util.*;
 import okhttp3.Callback;
 import okhttp3.*;
 import java.io.*;
+import android.content.*;
 
 public class ChooseAreaFragment extends Fragment
 {
@@ -57,6 +58,19 @@ public class ChooseAreaFragment extends Fragment
 					}else if(currentLevel==LEVEL_CITY){
 						selectedCity=cityList.get(p3);
 						queryCounties();
+					}else if(currentLevel==LEVEL_COUNTY){
+						String weatherId= countyList.get(p3).getWeatherId();
+						if(getActivity() instanceof MainActivity){
+						Intent intent= new Intent(getActivity(),WeatherActivity.class);
+						intent.putExtra("weather_id",weatherId);
+						startActivity(intent);
+						getActivity().finish();
+						}else if(getActivity() instanceof WeatherActivity){
+							WeatherActivity activity= (WeatherActivity) getActivity();
+							activity.drawerLayout.closeDrawers();
+							activity.swipeRefresh.setRefreshing(true);
+							activity.requestWeather(weatherId);
+						}
 					}
 				}
 			});
